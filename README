@@ -1,0 +1,15 @@
+Usage Example:
+
+  $ python tag-getter.py http://ebooks.adelaide.edu.au/c/carroll/lewis/alice/chapter1.html div class=dochead
+
+Created Xpath: //div[@class="dochead"]
+Alice in Wonderland, by Lewis Carroll
+
+  $ python tag-getter.py http://ebooks.adelaide.edu.au/c/carroll/lewis/alice/chapter1.html p
+
+Created Xpath: //p
+Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice
+she had peeped into the book her sister was reading, but it had no pictures or conversations in it, ‘and what is the use of
+a book,’ thought Alice ‘without pictures or conversation?’
+
+...
