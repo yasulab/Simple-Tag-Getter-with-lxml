@@ -2,30 +2,25 @@
 #! -*- coding: utf-8 -*-
 
 import sys
+import urllib
 import urllib2
 import lxml.html
         
-def get_texts(url, tag):
-    try:
-        html = urllib2.urlopen(url).read()
-    except urllib2.HTTPError, e:
-        # If returned 404
-        #print e.read()
-        print "404 Not Found"
-        return
-        
-    root = lxml.html.fromstring(html)
-    anchors = root.xpath(tag)
+def get_texts_by_web(url, tag, attr, **kwargs):
+    baseurl = "http://www.twigraphy.org/api/tag-getter"
 
-    text_list = []
-    for a in anchors:
-        text = lxml.html.tostring(a, method='text', encoding='utf-8')
-        #print text.strip('\t\n')
-        text_list.append(text.strip('\t\n'))
-    if not text_list:
-        text = "There are no tags in this page."
-        text_list.append(text)
-    return text_list
+    kwargs.update({
+        'url': url,
+        'tag': tag,
+        'attr': attr,
+        })
+    
+    url = '?'.join((baseurl, urllib.urlencode(kwargs)))
+    #print url
+    
+    req = urllib2.Request(url)
+    f = urllib2.urlopen(req)
+    return f.read()
 
 def create_xpath(tag, attr):
     xpath = "//"
@@ -50,9 +45,14 @@ if __name__ == "__main__":
         attr = sys.argv[3].lower()
     else:
         attr = ""
-    xpath = create_xpath(tag, attr)
-    text_list = get_texts(url, xpath)
-    for t in text_list:
+    text = get_texts_by_web(url, tag, attr)
+    text_list = text.split('\n')
+    i = 1
+    for t in text_list[8:-4]: # remove needless tags
+        if not t.split():
+            continue
         print t
+        i += 1
+        
 
 

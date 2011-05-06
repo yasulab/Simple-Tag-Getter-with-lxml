@@ -1,8 +1,3 @@
-Description:
-
-Given URL and tag (and its attributes),
-scrape the sentences with the tags in the URL.
-
 Usage Example:
 
   $ python tag-getter.py http://ebooks.adelaide.edu.au/c/carroll/lewis/alice/chapter1.html div class=dochead
